@@ -29,10 +29,24 @@ import org.xml.sax.SAXException;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.xpath.XPathConstants;
 
-import static org.apache.solr.handler.component.AliasingSearchHandler.AliasConfig.DEFAULT_CONF_FILE;
 
+/**
+ * Expands aliases into queries for thematic collections.
+ *
+ * Operates by taking apart the passed request, scanning it for thematic-collection keywords,
+ * and replacing those it finds with the appropriate expanded query.
+ *
+ * @author thill
+ * @author n.ireson@sheffield.ac.uk
+ * @version 2018.07.28
+ */
 public class AliasingSearchHandler
         extends SearchHandler {
+
+    private static final Logger log = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
+    private static final String DEFAULT_CONF_FILE = "query_aliases.xml";
+
+    private static final Map<SolrCore, AliasConfig> coreAliasConfigMap = new HashMap<>();
 
     /**
      * This class is a remnant form when the configuration was loaded as part of the initial Solr configuration.
@@ -42,8 +56,6 @@ public class AliasingSearchHandler
     public static class AliasConfig
             extends Config {
 
-        private static final Logger log = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
-        public static final String DEFAULT_CONF_FILE = "query_aliases.xml";
         private final HashMap<String, HashMap<String, String>> aliases;
 
         /**
@@ -141,24 +153,9 @@ public class AliasingSearchHandler
         }
     }
 
-    // TODO: check that the interfaces implemented in SearchHandler are done so
-    // in a fashion suitable to this subclass as well
-
-    private static final Map<SolrCore, AliasConfig> coreAliasConfigMap = new HashMap<>();
-
     public void init(NamedList params) {
         super.init(params);
     }
-
-    /**
-     * Expands aliases into queries for thematic collections.
-     *
-     * Operates by taking apart the passed request, scanning it for thematic-collection keywords,
-     * and replacing those it finds with the appropriate expanded query.
-     *
-     * @author thill
-     * @version 2017.11.14
-     */
 
     @Override
     public void handleRequestBody(SolrQueryRequest req, SolrQueryResponse rsp)
