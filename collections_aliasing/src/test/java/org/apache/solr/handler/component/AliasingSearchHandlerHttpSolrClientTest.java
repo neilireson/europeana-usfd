@@ -41,12 +41,12 @@ import org.apache.solr.client.solrj.impl.HttpSolrClient;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.client.solrj.response.SolrResponseBase;
 import org.apache.solr.common.SolrInputDocument;
+import org.apache.solr.core.AliasConfig;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static org.apache.solr.handler.component.AliasingSearchHandler.AliasConfig.DEFAULT_CONF_FILE;
 
 /**
  * Test for AliasingSearchHandlerHttpSolrClientTest
@@ -199,7 +199,7 @@ public class AliasingSearchHandlerHttpSolrClientTest
             FileUtils.copyFile(SolrTestCaseJ4.getFile(getSolrConfigFile()), f);
             f = new File(confDir, "schema.xml");
             FileUtils.copyFile(SolrTestCaseJ4.getFile(getSchemaFile()), f);
-            f = new File(confDir, DEFAULT_CONF_FILE);
+            f = new File(confDir, AliasConfig.DEFAULT_CONF_FILE);
             FileUtils.copyFile(SolrTestCaseJ4.getFile(getSchemaFile()), f);
 
             Files.createFile(homeDir.toPath().resolve("collection1/core.properties"));
