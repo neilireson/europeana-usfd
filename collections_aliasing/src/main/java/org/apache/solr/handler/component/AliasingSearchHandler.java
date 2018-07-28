@@ -29,19 +29,21 @@ import org.xml.sax.SAXException;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.xpath.XPathConstants;
 
-public class AliasingRequestHandler
+import static org.apache.solr.handler.component.AliasingSearchHandler.AliasConfig.DEFAULT_CONF_FILE;
+
+public class AliasingSearchHandler
         extends SearchHandler {
 
     /**
      * This class is a remnant form when the configuration was loaded as part of the initial Solr configuration.
      * However that involved changing and recompiling the whole Solr cadebase. Now the configuration for each core
-     * is stored in a static map and read when the first AliasingRequestHandler is initialised
+     * is stored in a static map and read when the first AliasingSearchHandler is initialised
      */
     public static class AliasConfig
             extends Config {
 
         private static final Logger log = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
-        private static final String DEFAULT_CONF_FILE = "query_aliases.xml";
+        public static final String DEFAULT_CONF_FILE = "query_aliases.xml";
         private final HashMap<String, HashMap<String, String>> aliases;
 
         /**
@@ -49,7 +51,7 @@ public class AliasingRequestHandler
          */
         public AliasConfig()
                 throws ParserConfigurationException, IOException, SAXException {
-            this((SolrResourceLoader) null, DEFAULT_CONF_FILE, null);
+            this(DEFAULT_CONF_FILE);
         }
 
         /**
@@ -93,7 +95,7 @@ public class AliasingRequestHandler
         public AliasConfig(SolrResourceLoader loader, String name, InputSource is)
                 throws ParserConfigurationException, IOException, SAXException {
 
-            super(loader, AliasConfig.DEFAULT_CONF_FILE, is, "/alias-configs/");
+            super(loader, DEFAULT_CONF_FILE, is, "/alias-configs/");
             this.aliases = populateAliases();
             log.info("Loaded Aliases Config: " + name);
         }
@@ -166,7 +168,8 @@ public class AliasingRequestHandler
         AliasConfig aliasConfig = coreAliasConfigMap.get(core);
         if (aliasConfig == null) {
             // Note it is possible to use the init param to parameterise the AliasConfig constructor
-            aliasConfig = new AliasConfig();
+            Path instanceDir = core.getCoreDescriptor().getInstanceDir();
+            aliasConfig = new AliasConfig(instanceDir, DEFAULT_CONF_FILE, null);
             coreAliasConfigMap.put(core, aliasConfig);
         }
         HashMap<String, HashMap<String, String>> aliases = aliasConfig.getAliases();
