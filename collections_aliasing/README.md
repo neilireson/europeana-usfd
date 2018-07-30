@@ -40,6 +40,6 @@ Example of query_aliases.xml:
 
 ## To Do
 
-The JUnit testing is currectly very basic.
+The JUnit testing is basic. The tests should use more realistic data and test all possible types of query.
 
-Currently the alias configuration is read once, when the Handler is first called. It might be good to include a request handler to re-read the configuration file which would enable the configuration to be updated without having to restart the core.
+Currently the alias configuration is read once for each core, the first time the Handler receives a request from that core. It might be good to include the possibility to request the handler to re-read the configuration file which would enable the configuration to be updated without having to restart the core.
