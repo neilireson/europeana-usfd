@@ -76,6 +76,10 @@
 	</dependencies>
 
 	<build>
+        <finalName>
+            ${artifactId}-solr${solr.version}-${version}
+        </finalName>
+        
         <testResources>
             <testResource>
                 <directory>${project.basedir}/src/test/resources</directory>
