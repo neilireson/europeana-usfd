@@ -6,7 +6,30 @@
 	<artifactId>europeana-collection-aliasing</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>Europeana Collection Aliasing</name>
-	<dependencies>
+
+    <developers>
+        <developer>
+            <id>neilireson</id>
+            <name>Neil Ireson</name>
+            <email>n.ireson@sheffield.ac.uk</email>
+            <organization>University of Sheffield</organization>
+            <organizationUrl>http://oak.dcs.shef.ac.uk/</organizationUrl>
+            <url>http://staffwww.dcs.shef.ac.uk/people/N.Ireson</url>
+        </developer>
+    </developers>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <maven-compiler-plugin.version>3.8.0</maven-compiler-plugin.version>
+
+        <junit.version>4.12</junit.version>
+        <lucene.version>6.6.5</lucene.version>
+        <slf4j.version>1.7.25</slf4j.version>
+        <solr.version>6.6.5</solr.version>
+    </properties>
+
+    <dependencies>
 
 		<dependency>
 			<groupId>org.apache.solr</groupId>
@@ -57,48 +80,19 @@
             <testResource>
                 <directory>${project.basedir}/src/test/resources</directory>
             </testResource>
-            <testResource>
-                <directory>${module-path}/../test-files</directory>
-            </testResource>
-            <testResource>
-                <directory>${top-level}/dev-tools/maven/solr</directory>
-                <includes>
-                    <include>maven.testlogging.properties</include>
-                </includes>
-            </testResource>
         </testResources>
-
         
         <plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.7.0</version>
+				<version>${maven-compiler-plugin.version}</version>
 				<configuration>
 					<source>1.8</source>
 					<target>1.8</target>
 					<encoding>UTF-8</encoding>
 				</configuration>
 			</plugin>
-            
-			<plugin>
-				<artifactId>maven-assembly-plugin</artifactId>
-				<configuration>
-					<descriptorRefs>
-						<descriptorRef>jar-with-dependencies</descriptorRef>
-					</descriptorRefs>
-				</configuration>
-			</plugin>
-			
         </plugins>
 	</build>
-
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-
-		<junit.version>4.12</junit.version>
-		<lucene.version>6.6.5</lucene.version>
-		<slf4j.version>1.7.25</slf4j.version>
-		<solr.version>6.6.5</solr.version>
-	</properties>
     
 </project>
