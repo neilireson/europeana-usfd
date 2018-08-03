@@ -4,7 +4,7 @@ The code was originally developed within the Europeana Project (see https://gith
 
 This code was developed for Solr version 6.6, and with a few migration changes should be straightforward to convert to later Solr versions.  
 
-The currect functionality "should" be identifcal to the original handler, the only difference to the Solr configuration being that the class name was changed from AliasingRequestHandler to AliasingSearchHandler (as the class extends SearchHandler). 
+The current functionality "should" be identical to the original handler, the only difference to the Solr configuration being that the class name was changed from AliasingRequestHandler to AliasingSearchHandler (as the class extends SearchHandler). 
 
 ## Installation
 
