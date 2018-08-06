@@ -16,11 +16,24 @@ To include the jar in the core add the following line to the core's solrconfig.x
 
     <lib dir="../lib" regex=".*\.jar" />
   
+There are then two (mutually exclusive) ways of using the aliasing; as a SearchHandler or a QueryComponent.
+
+### Installing as Search Handler
+
 To use the request handler add the following line to the core's solrconfig.xml file:
 
     <requestHandler name="/alias" class="solr.AliasingSearchHandler"/>
 
 If you wish to replace the default "select"  handler then just replace the "solr.SearchHandler" class name with "solr.AliasingSearchHandler"
+
+### Installing as Query Component
+
+To use the request handler add the following line to the core's solrconfig.xml file:
+
+     <searchComponent name="query"  class="org.apache.solr.handler.component.AliasingQueryComponent" />
+
+
+### Alias configuration file
 
 The alias handler expects a query_aliases.xml file to be  the Solr core's conf directory. If the file is not present the handler will throw an exception.
 
